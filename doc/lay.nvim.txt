@@ -1,0 +1,76 @@
+*lay.nvim.txt*                                                     lay.nvim docs
+
+==============================================================================
+CONTENTS                                                          *lay-contents*
+
+    INTRO .......................................... |lay-intro|
+    COMMANDS ....................................... |lay-commands|
+
+==============================================================================
+INTRO                                                                *lay-intro*
+
+Lay lets you layout a subset of your windows by editing a layout expression.
+
+==============================================================================
+COMMANDS                                                          *lay-commands*
+
+>
+    :Lay
+<
+Temporarily labels windows with integer indices.
+Prompts for a layout specification involving these indices.
+Applies this layout to the mentioned windows.
+
+A layout specification is a nested structure of window indices.
+They are described by inputting a minimal lua expression involving any of the
+following functions:
+- `h{...}`: Arrange windows horizontally (left to right)
+- `v{...}`: Arrange windows vertically (top to bottom)
+- `u{...}`: Arrange windows vertically (bottom to top)
+- `d{...}`: Arrange windows vertically (top to bottom)
+- `l{...}`: Arrange windows horizontally (right to left)
+- `r{...}`: Arrange windows horizontally (left to right)
+
+Each function accepts an array of either:
+- A window index (a number corresponding to the labels shown on the windows)
+- Another nested layout specification (allowing for complex arrangements)
+
+The initial prompt will show an expression describing the current window layout.
+
+For example if you have a layout such as:
+>
+    +---------+---------+
+    |         |         |
+    |         |    2    |
+    |         |         |
+    |    1    +---------+
+    |         |         |
+    |         |    3    |
+    |         |         |
+    +---------+---------+
+<
+This would be captured by the expression `h{1, v{2, 3}}`.
+If you then edited this to be `v{h{1, 2}, 3}`, you'd end up with:
+>
+    +---------+---------+
+    |         |         |
+    |    1    |    2    |
+    |         |         |
+    +---------+---------+
+    |                   |
+    |         3         |
+    |                   |
+    +-------------------+
+<
+
+The first window in any nested expression is treated as an initial anchor
+point to iteratively position the next window against, which in turn becomes
+the next anchor point. So applying `h{1,2,3}`: window 1 will be untouched;
+then window 2 will be positioned to the right of window 1; then window 3 will
+be positioned to the right of window 2.
+
+Any windows not mentioned in the layout expression will persist untouched.
+
+==============================================================================
+
+vim:tw=78:sw=4:ts=8:ft=help:norl:
