@@ -34,3 +34,10 @@ If you then edited this to be `v{h{1, 2}, 3}`, you'd end up with:
 
 See `:help lay.nvim` / [docs](./doc/lay.nvim.txt) for details.
 
+
+## Setup (neovim v0.12 with pack)
+
+```lua
+vim.pack.add({ "https://github.com/LiamGoodacre/lay.nvim" }, { load = true, confirm = false })
+require("lay").setup()
+```
