@@ -349,10 +349,12 @@ function M.Lay_command()
     M._parse_winlayout(windows)(vim.fn.winlayout())
 
   M._label_windows(windows, function(clean_up_labels)
-    M._prompt_for_spec(existingLayout, function(spec)
-      clean_up_labels()
-      if spec == nil then return end
-      M._apply_layout_spec(windows, spec)
+    vim.schedule(function()
+      M._prompt_for_spec(existingLayout, function(spec)
+        clean_up_labels()
+        if spec == nil then return end
+        M._apply_layout_spec(windows, spec)
+      end)
     end)
   end)
 end
