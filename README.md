@@ -41,3 +41,9 @@ See `:help lay.nvim` / [docs](./doc/lay.nvim.txt) for details.
 vim.pack.add({ "https://github.com/LiamGoodacre/lay.nvim" }, { load = true, confirm = false })
 require("lay").setup()
 ```
+
+Then run with:
+
+```
+:Lay
+```
